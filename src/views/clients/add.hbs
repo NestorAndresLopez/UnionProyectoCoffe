@@ -1,0 +1,44 @@
+<div class="col-md-6 mx-auto">
+    <div class="car">
+        <div class="card-header">
+            <h2>Nuevo Cliente</h3>
+        </div>
+        <div class="card-body">
+            <form action="/addclients" method="POST">
+
+                <div class="form-group">
+                    <input type="text" name="nit" class="form-control" placeholder="Nit" autofocus>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="name" class="form-control" placeholder="Nombre" autofocus>
+                </div>
+
+                <div class="form-group">
+                    <textarea name="city" class="form-control" placeholder="Ciudad"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <textarea name="address" class="form-control" placeholder="Direccion"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <textarea name="phoneNumber" class="form-control" placeholder="Telefono Contacto"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" name="email" class="form-control" placeholder="Correo" autofocus>
+                </div>
+
+
+
+                <div class="form-group d-grid gap-2">
+                        <button  class="btn-block btn btn-primary " type="submit" >
+                            Guardar
+                        </button>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

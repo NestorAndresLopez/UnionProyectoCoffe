@@ -1,0 +1,38 @@
+<div class="container p-4">
+    <div class="row">
+        {{#each clients}}
+            <div class="col-md-3">
+                <div class="card text-center">                   
+                        <h5 class="card-title text-uppercase">
+                            {{nit}}
+                        <h5>
+                        <p class="m-2">
+                            {{name}}
+                        </p>
+                        <p class="m-2">
+                            {{city}}
+                        </p>
+                        <p class="m-2">
+                            {{address}}
+                        </p>
+                        <p class="m-2">
+                            {{phoneNumber}}
+                        </p>
+                        <p class="m-2">
+                            {{email}}
+                        </p>
+                        <a href="/deleteclients{{id}}" class="btn btn-danger"> Eliminar</a>
+                        <a href="/editclients{{id}}" class="btn btn-secondary">Editar</a>
+                </div>
+
+            </div>
+            {{else}}
+                <div class="col-md-4 mx-auto">
+                    <div class="card card-body text-center">
+                        <p>No hay ningun cliente</p>
+                        <a href="/links/add">Crea uno</a>
+                    </div>
+                </div>
+        {{/each}}
+    </div>
+</div>

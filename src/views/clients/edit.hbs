@@ -4,30 +4,30 @@
             <h2>Nuevo Cliente</h3>
         </div>
         <div class="card-body">
-            <form action="/addclients" method="POST">
+            <form action="/editclients/{{clients.id}}" method="POST">
 
                 <div class="form-group">
-                    <input type="text" name="nit" class="form-control" placeholder="Nit" autofocus>
+                    <input type="text" value='{{clients.nit}}' name="nit" class="form-control" placeholder="Nit" autofocus>
                 </div>
 
                 <div class="form-group">
-                    <input type="text" name="name" class="form-control" placeholder="Nombre" >
+                    <input type="text" value='{{clients.name}}' name="name" class="form-control" placeholder="Nombre" autofocus>
                 </div>
 
                 <div class="form-group">
-                    <input type="text" name="city" class="form-control" placeholder="Ciudad">
+                    <input name="city" value='{{clients.city}}' class="form-control" placeholder="Ciudad">
                 </div>
 
                 <div class="form-group">
-                    <input name="address" class="form-control" placeholder="Direccion">
+                    <input name="address" value='{{clients.address}}' class="form-control" placeholder="Direccion">
                 </div>
 
                 <div class="form-group">
-                    <input type="number" name="phoneNumber" class="form-control" placeholder="Telefono Contacto">
+                    <input name="phoneNumber" value='{{clients.phoneNumber}}' class="form-control" placeholder="Telefono Contacto">
                 </div>
 
                 <div class="form-group">
-                    <input type="email" name="email" class="form-control" placeholder="Correo" autofocus>
+                    <input type="email" value='{{clients.email}}' name="email" class="form-control" placeholder="Correo" autofocus>
                 </div>
 
 

@@ -3,52 +3,25 @@ import * as Controllers from './controller.js';
 
 const router = new Router();
 
+//ALL CLIENTS 
 router.get('/clients', Controllers.GetClients);
 
+//RENDER ADD CLIENTS VIEW
 router.get('/addclients', (req, res) =>{
     res.render('clients/add');
 } );
 
-router.post('/addclients', async(req, res) =>{
-    const newObjet = {
-        id: uuidv4(),
-        nit: req.body.nit,
-        name: req.body.name,
-        city: req.body.city,
-        address: req.body.address,
-        phoneNumber: req.body.phoneNumber,
-        email: req.body.email
-    };
-    await connection.query('INSERT INTO clients set ?', [newObjet]);
-    res.redirect('/clients');
-} );
+// NEW CLIENTS
+router.post('/addclients',  Controllers.CreateClients);
 
-router.get('/deleteclients/:id', async(req, res)=>{
-    const {id} = req.params;
-    await connection.query('DELETE FROM clients WHERE ID = ?',[id] );
-    res.redirect('/clients');
-} )
+//DELETE CLIENTS
+router.get('/deleteclients/:id', Controllers.DeleteClients);
 
-router.get('/editclients/:id', async(req,res)=>{
-    const {id} = req.params;
-    const clients = await connection.query('SELECT * FROM clients WHERE id = ?',[id] );
-    res.render('clients/edit',{clients:clients[0]});
-})
+//RENDER EDIT CLIENTS VIEW
 
-router.post('/editclients/:id', async(req, res)=>{
-    const {id} = req.params;
-    const{nit, name, city, address, phoneNumber, email} = req.body;
-    const editObject = {
-        nit,
-        name,
-        city,
-        address,
-        phoneNumber,
-        email
-    };
-    await connection.query('UPDATE clients set ? WHERE id = ?', [editObject, id]);
-    res.redirect('/clients');
-})
+router.get('/editclients/:id', Controllers.UpdateClientsView);
 
+//EDIT CLIENTS 
+router.post('/editclients/:id', Controllers.UpdadateClients);
 
 export default router;

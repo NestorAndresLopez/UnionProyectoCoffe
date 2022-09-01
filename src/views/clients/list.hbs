@@ -3,7 +3,7 @@
     <div class="table-responsive">
     <table border="1" class="table table-hover  table-bordered">
         <thead class="table-secondary">
-            <tr>
+            <tr><br>
                 <th>Nit</th>
                 <th>Nombre</th>
                 <th>Ciudad</th>
@@ -31,16 +31,10 @@
                 <th><a href="/deleteclients/{{id}}" class="btn btn-danger"> Eliminar</a>
                 </th>
             </tr>
-            {{else}}
-                <div class="col-md-4 mx-auto">
-                    <div class="card card-body text-center">
-                        <p>No hay ningun cliente</p>
-                        <a href="/addclients">Crea uno</a>
-                    </div>
-                </div>
             {{/each}}
-
         </tbody>
     </table>
     </div>
+    <a href="/addclients" class="btn btn-success"> Crear Cliente</a>
+            
 </div>

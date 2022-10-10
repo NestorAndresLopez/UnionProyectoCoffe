@@ -1,5 +1,4 @@
 import {v4 as uuidv4} from 'uuid';
-import { connection } from '../../utils/database.js';
 import * as Dao from './dao.js';
 
 export const GetClients = (req, res)=>{
@@ -12,6 +11,9 @@ export const GetClients = (req, res)=>{
 }
 
 export const CreateClients = (req, res) => {
+    console.log("%$%$%$% jwt2")
+    console.log(req.cookies)
+    console.log("%$%$%$% jwt2")
     const clientsObj ={
         id: uuidv4(),
         nit: req.body.nit,

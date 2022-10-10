@@ -2,8 +2,8 @@ import {connection} from '../../utils/database.js';
 
 export const GetClientsDao = async(callback) => {
     const sql = `SELECT * FROM clients`;
-    await connection.query(sql, (err, resp) => {
-        if(err) callback(error);
+    await connection.query(sql, (error, resp) => {
+        if(error) callback(error);
         callback(null, resp)
     });
 }
@@ -18,16 +18,16 @@ export const CreateClientsDao = async(payload, callback) => {
 
 export const DeleteClientsDao = async(id, callback) =>{
     const sql = `DELETE FROM clients WHERE id = '${id}'`;
-    await connection.query(sql,(err,resp) =>{
-        if(err) callback(error);
+    await connection.query(sql,(error,resp) =>{
+        if(error) callback(error);
         callback(null, resp);
     })
 }
 
 export const UpdateClientsViewDao = async(id, callback) =>{
     const sql = `SELECT * FROM clients WHERE id = '${id}'`;
-    await connection.query(sql,(err, resp) =>{
-        if(err) callback(error);
+    await connection.query(sql,(error, resp) =>{
+        if(error) callback(error);
         callback(null, resp);
     })
 }

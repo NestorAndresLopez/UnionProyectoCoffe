@@ -1,17 +1,22 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import morgan from 'morgan';
 import exphbs from 'express-handlebars';
-import path  from 'path';
+import path from 'path';
+import cookieParser from 'cookie-parser';
 import {connection} from './utils/database.js';
 import { fileURLToPath } from 'url';
 
-import navRoutes from './modules/nav/index.js';
-import usersRoutes from './modules/users/authentication.js';
+import usersRoutes from './modules/users/router.js';
 import clientsRoutes from './modules/clients/routes.js';
 
-//Initializations
+//Initializations 
 
 const app = express();
+
+
+//Cookies
+app.use(cookieParser())
 
 //Settings
 
@@ -53,15 +58,24 @@ app.use((req, res, next) =>{
 })
 
 //Routes
-app.use(navRoutes);
 app.use(usersRoutes);
 app.use(clientsRoutes);
 
 
-//Public
+//Public 
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//Environment Variables
+dotenv.config({ path: './src/env/.env'})
+
+//para eliminar cache y no poder volver a la pagina anterior
+// app.use(function(req, res, next){
+//     if(!req.user)
+//     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+//     next();
+// });
 
 //Listen Server
 app.listen(app.get('port'), ()=>{

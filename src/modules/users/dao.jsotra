@@ -1,0 +1,9 @@
+import {connection} from "../../utils/database.js";
+
+export const RegisterUsersDao = async(payload, callback) =>{
+    const sql = 'INSERT INTO users SET?';
+    await connection.query(sql, payload, (error, resp) =>{
+        if(error) callback(error),
+        callback(null, resp)
+    });
+}

@@ -6,3 +6,4 @@
 //buena practica separar funciones por solo una accion ejemplo abajo
 //router.post('/login', authController.getUser, authController.createSessionToken, authController.setCookie)
 //los midlewares siempre van primero que las rutas 
+//escondo el menu si no esta logiado con jwt, al ingresar sigue escondiendo las opciones pero si recargo por segunda vez ya aparecen

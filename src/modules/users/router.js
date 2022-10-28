@@ -19,8 +19,8 @@ router.get('/register', (req, res) =>{
 
 //router para los metodos del controller
 
-router.post('/register', authController.register)
-router.post('/login', authController.login, authController.getUser, authController.createSessionToken, authController.setCookie)
+router.post('/register', authController.register);
+router.post('/login',  authController.UserPass, authController.VerifyUserPass, authController.CreateToken, authController.CreateKokies);
 router.get('/logout', authController.logout);
 
 export default router;

@@ -3,7 +3,7 @@ import bcryptjs from 'bcryptjs';
 import {connection} from '../../utils/database.js';
 import {promisify} from 'util';
 import {v4 as uuidv4} from 'uuid';
-
+import { verify } from 'crypto';
 
 //procedimiento para registrarnos
 
@@ -25,65 +25,75 @@ try {
 }
 
 
-export const getUser = async(req, res) =>{
-    console.log("recuperando usuario");
+export const UserPass = async(req, res, next) =>{
+        const user = req.body.user
+        const pass = req.body.pass
+        if(!user || !pass){
+            res.render('users/login')
+        }else{
+            return next()
+        }
 }
 
 
-export const createSessionToken = async(req, res) =>{
-    console.log("creando token");
-}
-
-
-export const setCookie = async(req, res) =>{
-    console.log("configurando cookies");
-}
-
-export const login = async(req, res) =>{
-
-    try {
+export const VerifyUserPass = async(req, res, next) =>{
         const user = req.body.user
         const pass = req.body.pass
 
-        if(!user || !pass){
-            res.render('users/login')
-            return
-        }
-
         connection.query('SELECT * FROM users WHERE user = ?' , [user], async (error, results) =>{
             if(results.length == 0 || !(await bcryptjs.compare(pass, results[0].pass))){
-                res.render('users/login')
-            
+                res.render('users/login')            
             }else{
-                //inicio de secion ok
-                const id = results[0].id 
-                const token = jwt.sign({id}, process.env.KEY_SECRET)  
-                        
-                //token sin fecha de expiracion
-                // const token = jwt.sing({id:id}, process.env.JWT_SECRETO)
-                
-                console.log("TOKEN: " + token+" para el USUARIO: " +user)
-
-                const cookiesOptions ={
-                    expires: new Date(Date.now()+90 * 24 * 60 * 60 * 1000),
-                    httpOnly: true
-                }
-                res.cookie('jwt', token)
-                res.render('users/index')
-
+                return next()
             }
         } )
-
-    } catch (error) {
-        console.log(error)
-    }
 }
 
-export const isAuthenticated = async(req, res, next) => {
+
+export const CreateToken = async(req, res, next) =>{
+    const user = req.body.user
+
+        connection.query('SELECT * FROM users WHERE user = ?' , [user], async (error, results) =>{
+            if(results.length == 0 ){
+                res.render('users/login') 
+                                 
+            }else{
+                const id = results[0].id 
+                const token = jwt.sign({id}, process.env.KEY_SECRET)  
+            
+            //token sin fecha de expiracion
     
+            console.log("TOKEN: " + token+" para el USUARIO: " +user)
+
+            // const cookiesOptions ={
+            //     expires: new Date(Date.now()+90 * 24 * 60 * 60 * 1000),
+            //     httpOnly: true
+            // }
+            // res.cookie('jwt', token)
+            // res.render('users/index')
+            
+            return req.token = token, next();   
+            }
+        } )
+}
+
+
+export const CreateKokies = async(req, res) =>{
+    const token = req.token
+    const cookiesOptions ={
+        expires: new Date(Date.now()+90 * 24 * 60 * 60 * 1000),
+        httpOnly: true
+    }
+    res.cookie('jwt', token);
+    res.redirect('/');
+
+}
+
+
+export const isAuthenticated = async(req, res, next) => {
     if(req.cookies.jwt){
         try {
-            const decodificada = await promisify(jwt.verify)(req.cookies.jwt, 'keysecret')
+            const decodificada = await promisify(jwt.verify)(req.cookies.jwt, process.env.KEY_SECRET)
             connection.query('SELECT users WHERE id = ?', [decodificada.id], (error, results)=>{
                 if(!results){return next()}
                 req.user= results[0]
